@@ -1,0 +1,21 @@
+# --- Entorns virtuals (NO es pugen a GitHub) ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Cau de Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Configuració local d'editors ---
+.vscode/
+.idea/
+
+# --- Sistema operatiu ---
+.DS_Store
+Thumbs.db
+
+# --- Altres ---
+*.log
