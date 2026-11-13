@@ -289,11 +289,22 @@ def move_paddle(current_y: int, direction: int, speed: int, height: int, paddle_
     Take into account that the paddle must always stay fully visible on screen.
     That is when it reaches the limits (up or down) it stays there, so consider paddle_h and height here.
     """
-    # TODO: put your code!!!!
-    
-    # This line of code has been left for letting the full program work
-    # You will need to eliminate it when adding your code
-    return current_y
+    # 1. Calcular la posició nova
+    # speed sempre és positiu; direction (-1, 0 o +1) n'indica el sentit.
+    # En multiplicar-los, el desplaçament és negatiu (puja), zero (quieta) o positiu (baixa).
+    new_y = current_y + direction * speed
+
+    # 2. Límit superior: la vora de dalt de la pala (new_y) no pot ser menor que 0
+    if new_y < 0:
+        new_y = 0
+
+    # 3. Límit inferior: la vora de baix (new_y + paddle_h) no pot passar de height,
+    #    per tant la y màxima de la pala és height - paddle_h
+    elif new_y > height - paddle_h:
+        new_y = height - paddle_h
+
+    # 4. Retornar la posició ja corregida (el bucle principal la desa a p1_y o p2_y)
+    return new_y
 
 
 def move_ball(x: int, y: int, vx: int, vy: int) -> tuple[int, int]:
