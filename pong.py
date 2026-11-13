@@ -320,17 +320,17 @@ def move_ball(x: int, y: int, vx: int, vy: int) -> tuple[int, int]:
     Note that collisions (i.e. with the paddles, with the walls) are not considered yet here, 
     but in the next 2 functions (collide_ball_walls and collide_ball_paddle)
     """
-    # 1. Nova posició horitzontal: vx és el desplaçament en x a cada fotograma.
-    #    vx > 0 mou la pilota cap a la dreta; vx < 0, cap a l'esquerra.
-    new_x = x + vx
 
-    # 2. Nova posició vertical: vy és el desplaçament en y a cada fotograma.
-    #    Com que a pygame la y creix cap avall, vy > 0 la fa baixar i vy < 0 la fa pujar.
-    new_y = y + vy
+    # TODO: put your code!!!!
+    # 1. Nova posició horitzontal (eix x)
+    new_x = x + vx  # La nova posició de x és el valor actual de x més la velocitat horitzontal de vx
 
-    # 3. Retornar les dues coordenades com una tupla (x', y').
-    #    Les velocitats no canvien aquí: els rebots es calculen a collide_ball_walls i collide_ball_paddle.
-    return new_x, new_y
+    # 2. Nova posició vertical (eix y)
+    new_y = y + vy  # La nova posició és el valor actual de y més la velcitat vertical de vy
+
+    # 3. Es retornen les noves coordenades (x', y') de la pilota després del moviment 
+    # !Seguint les indicacions, no es fa cap comprovació de col·lisions aquí, només es mou la pilota!
+    return new_x, new_y # Es retornen les noves coordenades (new_x, new_y) de la pilota després del moviment
 
 
 def collide_ball_walls(x: int, y: int, vx: int, vy: int, radius: int, width: int, height: int) -> tuple[int, int, int, int]:
@@ -352,10 +352,22 @@ def collide_ball_walls(x: int, y: int, vx: int, vy: int, radius: int, width: int
         For precisely detecting collisions, you might need to consider the ball radius
     """
     # TODO: put your code!!!!
+    # Aclariment: la pantalla en l'eix y es considera amb 0 a dalt i "height" a baix. Per tant, la vora superior de la pilota és y - radius i la vora inferior és y + radius.
+    # Dibuixem la pilota amb centre a (x,y) amb un radi segons la variable "radius"
 
-    # This line of code has been left for letting the full program work
-    # You will need to eliminate it when adding your code
-    return x, y, vx, vy
+    # Vora superior de la pilota
+    if y - radius < 0:  # Si la vora superior de la pilota és més petita que 0 (fora de la pantalla)
+        y = radius  # La nova posició vertical de la pilota és el radi (la vora superior toca el límit superior)
+        vy = -vy  # Invertim la velocitat vertical per simular el rebot (canviem el signe de vy per canviar-ne el sentit)
+
+    # Vora inferior de la pilota
+    if y + radius > height:  # Si la vora inferior de la pilota és més gran que l'altura de la pantalla
+        y = height - radius  # La nova posició vertical de la pilota és l'altura menys el radi (la vora inferior toca el límit inferior)
+        vy = -vy  # Invertim la velocitat vertical per simular el rebot (canviem el signe de vy per canviar-ne el sentit)
+
+    # En aquesta funció només es comproven les col·lisions amb les parets horitzontals (superior i inferior) ja que les verticals es tracten en el main ja que són els gols. 
+    # Es retornen les noves coordenades (x, y) i velocitats (vx, vy) de la pilota després de comprovar les col·lisions amb les parets.
+    return x, y, vx, vy 
 
 
 def collide_ball_paddle(x: int, y: int, vx: int, vy: int, paddle_x: int, paddle_y: int, paddle_w: int, paddle_h: int, radius: int) -> tuple[int, int, int, int, bool]:
