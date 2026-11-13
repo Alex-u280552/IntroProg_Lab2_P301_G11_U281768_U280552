@@ -320,12 +320,17 @@ def move_ball(x: int, y: int, vx: int, vy: int) -> tuple[int, int]:
     Note that collisions (i.e. with the paddles, with the walls) are not considered yet here, 
     but in the next 2 functions (collide_ball_walls and collide_ball_paddle)
     """
+    # 1. Nova posició horitzontal: vx és el desplaçament en x a cada fotograma.
+    #    vx > 0 mou la pilota cap a la dreta; vx < 0, cap a l'esquerra.
+    new_x = x + vx
 
-    # TODO: put your code!!!!
+    # 2. Nova posició vertical: vy és el desplaçament en y a cada fotograma.
+    #    Com que a pygame la y creix cap avall, vy > 0 la fa baixar i vy < 0 la fa pujar.
+    new_y = y + vy
 
-    # This line of code has been left for letting the full program work
-    # You will need to eliminate it when adding your code
-    return x, y
+    # 3. Retornar les dues coordenades com una tupla (x', y').
+    #    Les velocitats no canvien aquí: els rebots es calculen a collide_ball_walls i collide_ball_paddle.
+    return new_x, new_y
 
 
 def collide_ball_walls(x: int, y: int, vx: int, vy: int, radius: int, width: int, height: int) -> tuple[int, int, int, int]:
