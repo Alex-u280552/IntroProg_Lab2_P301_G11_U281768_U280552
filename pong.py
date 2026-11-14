@@ -112,12 +112,14 @@ def get_config() -> tuple[int, int, int, int, int]:
         #   Si es respon que sí es procedeix a la sol·licitud dels valors personalitzats a l'usuari
         paddle_height = read_int_in_range_w_default("Alçada de la pala (en píxels)", 60, 160, PADDLE_H)    # Sol·licitud de l'alçada de la pala
         paddle_speed = read_int_in_range_w_default("Velocitat de la pala", 3, 15, SPEED_PADDLE)  # Sol·licitud de la velocitat de la pala
-        speed_ball_x = read_int_in_range_w_default("Velocitat horitzontal de la pilota", 3, 12, SPEED_BALL_X) # Sol·licitud de la velocitat en horitzontal de la pilota
-        speed_ball_y = read_int_in_range_w_default("Velocitat vertical de la pilota", 2, 10, SPEED_BALL_Y)    # Sol·licitud de la velocitat en vertical de la pilota
+        ball_x_speed = read_int_in_range_w_default("Velocitat horitzontal de la pilota", 3, 12, SPEED_BALL_X) # Sol·licitud de la velocitat en horitzontal de la pilota
+        ball_y_speed = read_int_in_range_w_default("Velocitat vertical de la pilota", 2, 10, SPEED_BALL_Y)    # Sol·licitud de la velocitat en vertical de la pilota
         ball_radius = read_int_in_range_w_default("Radi de la pilota", 5, 20, BALL_RADIUS)    # Sol·licitud del radi de la pilota
         # Recordatori: els 4 arguments de la funció read_int_in_range_w_default(prompt, min, max, valor per defecte)
-
-    return paddle_height, paddle_speed, speed_ball_x, speed_ball_y, ball_radius
+        #   Es retornen els valors personalitzats per l'usuari
+        return paddle_height, paddle_speed, ball_x_speed, ball_y_speed, ball_radius
+    else:   # En cas de no voler canviar els valors de la configuració, s'apliquen els valors per defecte
+        return PADDLE_H, SPEED_PADDLE, SPEED_BALL_X, SPEED_BALL_Y, BALL_RADIUS
 
 def change_colors() -> tuple[tuple[int, int, int], tuple[int, int, int]]:
     """ Ask the user if they want to modify the game colors (background and foreground).
