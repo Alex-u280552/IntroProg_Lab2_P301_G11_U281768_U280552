@@ -67,7 +67,7 @@ KEY_UP_RIGHT = pygame.K_UP          # arrow UP
 KEY_DOWN_RIGHT = pygame.K_DOWN      # arrow DOWN
 
 # Play against machine (optional feature): set to True once compute_ai_direction() is implemented
-PLAY_AGAINST_MACHINE = True # Habilitem la opció de jugar contra la màquina (True) o contra un altre jugador (False). Ja s'ha implementat la funció compute_ai_direction() per fer que la màquina jugui sola.
+PLAY_AGAINST_MACHINE = False 
 
 # ==============================================================================
 # Functions to complete by the students : configuration/setup before game starts
@@ -146,13 +146,13 @@ def change_colors() -> tuple[tuple[int, int, int], tuple[int, int, int]]:
 
     # TODO: put your code!!!!
 
-    #   1. Preguntem a l'usuamri si vol canviar els colors
+    #   1. Preguntem a l'usuari si vol canviar els colors
     # La pregunta es formula i es respon a través de la funció ask_yes_no
-    if ask_yes_no("Vols canviar els colors del joc? ") == True: # En cas de que l'usuari hagi respós que sí que vol canviar el color, la funció retorna True i es procedeix al canvi de color.
+    if ask_yes_no("Vols canviar els colors del joc?") == True: # En cas de que l'usuari hagi respost que sí que vol canviar el color, la funció retorna True i es procedeix al canvi de color.
         #   Ús de la funció read_color per a la sol·licitud del color a l'usuari, aquesta retorna una tupla amb els colors RGB (R, G, B)
-        background_color = read_color("background") # Color del fons de pantalla
-        foreground_color = read_color("foreground") # Color de les pales, la pilota i el text imprès a pantalla
-        return  background_color, foreground_color  # Es retornen els dos colors en ordre: fons i primer pla
+        background_color = read_color("fons") # Color del fons de pantalla
+        foreground_color = read_color("elements del joc") # Color de les pales, la pilota i el text imprès a pantalla
+        return background_color, foreground_color  # Es retornen els dos colors en ordre: fons i primer pla
 
     else:
         # Si l'usuari respon que no, es retornen els colors per defecte
@@ -189,7 +189,13 @@ def read_color(prompt: str) -> tuple[int, int, int]:
     """ 
 
     # TODO: put your code!!!!
-    # return r, g, b
+    #   Sol·licitem els 3 colors RGB a l'usuari el qual haurà d'introduïr la intensitat de cadascun, sent 255 el màxim i 0 el mínim
+    r = read_int_in_range(f"Color {prompt}: color vermell (R)", 0, 255)    # Sol·licitud del color vermell
+    g = read_int_in_range(f"Color {prompt}: color verd (G)", 0, 255)   # Sol·licitud del color verd
+    b = read_int_in_range(f"Color {prompt}: color blau (B)", 0, 255)   # Sol·licitud del color blau
+
+    #   Es retornen els 3 components RGB que formen el color desitjat per l'usuari
+    return r, g, b
 
 def read_int_in_range(prompt: str, low: int, high: int) -> int:
     """Ask user for an integer within [low, high]. 
