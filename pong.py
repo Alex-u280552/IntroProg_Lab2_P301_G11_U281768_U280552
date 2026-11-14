@@ -420,11 +420,42 @@ def collide_ball_paddle(x: int, y: int, vx: int, vy: int, paddle_x: int, paddle_
       which is sufficient for this game.
     """
     # TODO: put your code!!!!
-    hit = False
+    hit = False # Per defecte suposem que no hi ha hagut una col·lisió.
 
-    # This line of code has been left for letting the full program work
-    # You will need to eliminate it when adding your code
+    # 1. Definim les vores de la pilota com un rectangle amb centre a (x,y) i amb un radi "radius".
+    ball_left = x - radius
+    ball_right = x + radius
+    ball_top = y - radius
+    ball_bottom = y + radius
+
+    # 2. Definim les vores de la pala com un rectangle amb cantonada superior esquerra a (paddle_x, paddle_y) i afamb amplada "paddle_w" i alçada "paddle_h".
+    # Les dimensions no fan referencia a una pala en concret, sinó que a qualsevol pala. En la funció main() es cridarà dues vegades en cada bucle per definir cadascuna de les pales. 
+    paddle_left = paddle_x  # Costat esquerre de la pala
+    paddle_right = paddle_x + paddle_w  # Costat dret de la pala
+    paddle_top = paddle_y   # Costat superior de la pala
+    paddle_bottom = paddle_y + paddle_h # Costat inferior de la pala
+
+    # 3. Comprovem si hi ha superposició entre la pilota i la pala (col·lisió).
+    if (ball_right > paddle_left and ball_left < paddle_right and  ball_bottom > paddle_top and ball_top < paddle_bottom):
+        # Comprovem  que el costat dret de la pilota és més gran que el costat esquerre de la pala, si és així hi ha hagut una colisió (pilota xoca a la pala pel seu costat esquerre)
+        # Comprovem que el costat esquerre de la pilota és més petit que el costat dret de la pala, si és així hi ha hagut una colisió (pilota xoca a la pala pel sue costat dret)
+        # Comprovem que el costat inferior de la pilota és més gran que el costat superior de la pala, si és així hi ha hagut una colisió (pilota xoca a la pala pel seu costat superior)
+        # Comprovem que el costat superior de la pilota és més petit que el costat inferior de la pala, si és així hi ha hagut una colisió (pilota xoca a la pala pel seu costat inferior)
+        hit = True # Afirmem que s'ha produït una col·lisió
+
+    # 4. En cas de col·lisió, evitem la superposició de la pilota amb la pala actualitzant la seva posició en el moment del xoc. 
+        if vx < 0: # Si vx amb la que es desplaça la pilota és negativa, indica que el xoc es produeix a la cara dreta de la pala (la pilota es desplaça cap a l'esquerra). 
+            x = paddle_right + radius # La nova posició de la pilota és just fora de la pala, a la dreta (la vora esquerra de la pilota és a la vora dreta de la pala), evitant així que es superposin els dos elements. 
+
+        else: # Si vx amb la que es desplaça la pilota és positiva, indica que el xoc es produeix a la cara esquerra de la pala (la pilota es desplaça cap a la dreta).
+            x = paddle_left - radius # La nova posició de la pilota és just fora de la pala, a l'esquerra (la vora dreta de la pilota és a la vora esquerra de la pala), evitant així que es superposin els dos elements.
+
+    # 5. Invertim la velocitat horitzontal de la pilota per generar el rebot. 
+        vx = -vx # Invertim la velocitat horitzontal de la pilota per generar el revot (la pilota es desplaçara en sentit contrari en l'eix de les x)
+
     return x, y, vx, vy, hit
+
+  
 
 def reset_ball(center_x: int, center_y: int, vx0: int, vy0: int, to_right: bool) -> tuple[int, int, int, int]:
     """ Reset the ball to the center of the screen and return its initial position and velocity after a point has been scored.
