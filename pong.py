@@ -67,7 +67,7 @@ KEY_UP_RIGHT = pygame.K_UP          # arrow UP
 KEY_DOWN_RIGHT = pygame.K_DOWN      # arrow DOWN
 
 # Play against machine (optional feature): set to True once compute_ai_direction() is implemented
-PLAY_AGAINST_MACHINE = False
+PLAY_AGAINST_MACHINE = True # Habilitem la opció de jugar contra la màquina (True) o contra un altre jugador (False). Ja s'ha implementat la funció compute_ai_direction() per fer que la màquina jugui sola.
 
 # ==============================================================================
 # Functions to complete by the students : configuration/setup before game starts
@@ -146,9 +146,18 @@ def change_colors() -> tuple[tuple[int, int, int], tuple[int, int, int]]:
 
     # TODO: put your code!!!!
 
-    # This line of code has been left for letting the full program work
-    # You will need to eliminate it when adding your code
-    return BLACK, WHITE
+    #   1. Preguntem a l'usuamri si vol canviar els colors
+    # La pregunta es formula i es respon a través de la funció ask_yes_no
+    if ask_yes_no("Vols canviar els colors del joc? ") == True: # En cas de que l'usuari hagi respós que sí que vol canviar el color, la funció retorna True i es procedeix al canvi de color.
+        #   Ús de la funció read_color per a la sol·licitud del color a l'usuari, aquesta retorna una tupla amb els colors RGB (R, G, B)
+        background_color = read_color("background") # Color del fons de pantalla
+        foreground_color = read_color("foreground") # Color de les pales, la pilota i el text imprès a pantalla
+        return  background_color, foreground_color  # Es retornen els dos colors en ordre: fons i primer pla
+
+    else:
+        # Si l'usuari respon que no, es retornen els colors per defecte
+        return BLACK, WHITE
+
 
 def read_color(prompt: str) -> tuple[int, int, int]:
     """Ask the user to enter the three RGB components of a color with each component in [0,255].
