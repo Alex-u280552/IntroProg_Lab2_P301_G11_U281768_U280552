@@ -270,6 +270,20 @@ def ask_yes_no(prompt: str) -> bool:
     - Return only after receiving a valid input; do not stop the program with errors.
     """
     # TODO: put your code!!!!
+ 
+    while True:
+  
+        answer = input(prompt + " (y/n): ")  # S'imprimeix la pregunta amb la indicació de com respondre (y/n)
+        # Transformem la resposta a minúscules i eliminem els espais en blanc al principi i al final per tal de poder processar-la
+        answer = answer.strip().lower()  # Amb strip() eliminem els espais en blanc al principi i al final de la resposta, i amb lower() convertim els caràcters de la resposta en minúscules.
+
+        # Processem la resposta de l'usuari i comprovem si és vàlida
+        if answer == "y" or answer == "yes":  # Comprovem si la resposta és sí (y o yes)
+            return True  # Es retorna True si la resposta és afirmativa, es surt del bucle
+        elif answer == "n" or answer == "no": # Comprovem si la resposta és no (n o no)
+            return False  # Es retorna False si la resposta és negativa, es surt del bucle
+        else:  # Si la resposta no és ni sí ni no tal i com s'especifica en les instruccions, es torna a demanar
+            print("Introdueix una resposta vàlida (y/n).")  # Es mostra un missatge d'error indicant que la resposta no és vàlida i es torna a demanar la resposta
 
 # ================================
 # Functions to complete: main game
