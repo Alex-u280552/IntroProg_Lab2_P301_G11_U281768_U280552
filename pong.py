@@ -204,6 +204,20 @@ def read_int_in_range(prompt: str, low: int, high: int) -> int:
     """
     
     # TODO: put your code!!!!
+    while True:
+        try: 
+            #   Sol·licitud d'entrada a l'usuari amb indicació del rang
+            user_input = input(f"{prompt} - Introdueix un valor entre {low} i {high}: ").strip()  # S'imprimeix la pregunta amb la indicació de com respondre (valor entre low i high) i es llegeix l'entrada de l'usuari. Amb strip() eliminem els espais en blanc al principi i al final de la resposta per evitar que sigui " 100 " i es consideri invàlida.
+
+            #   Gestió de la resposta de l'usuari i comprovació de la validesa de l'entrada
+            if low <= int(user_input) <= high:  # Comprovem si l'entrada de l'usuari es situa entre els valors del rang
+                return int(user_input)  # Si el valor introduit per l'usuari es troba dins del rang, es retorna aquest valor i es surt del bucle
+            elif int(user_input) < low or int(user_input) > high:  # Comprovem si l'entrada de l'usuari és fora del rang especificat
+                print(f"Introdueix un valor entre {low} i {high}.")  # Si el valor introduit per l'usuari es troba fora del rang, es mostra un missatge d'error indicant que l'entrada no és vàlida i es torna a demanar la resposta
+
+        #   Gestió de l'error
+        except ValueError:  # Si l'entrada de l'usuari no és un enter (lletres, decimals o cap valor), es captura l'excepció ValueError
+            print("Introdueix un valor vàlid.")  # Es mostra un missatge d'error indicant que l'entrada no és vàlida i es torna a demanar la resposta
 
 def read_int_in_range_w_default(prompt: str, low: int, high: int, default_val: int) -> int:
     """ Advanced/alternate more user-friendly version of read_int_in_range().
