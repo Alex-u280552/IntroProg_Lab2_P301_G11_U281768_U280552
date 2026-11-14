@@ -67,7 +67,7 @@ KEY_UP_RIGHT = pygame.K_UP          # arrow UP
 KEY_DOWN_RIGHT = pygame.K_DOWN      # arrow DOWN
 
 # Play against machine (optional feature): set to True once compute_ai_direction() is implemented
-PLAY_AGAINST_MACHINE = False 
+PLAY_AGAINST_MACHINE = True # La opció de jugar contra la màquina a través de la funció compute_ai_direction() ja està habilitada 
 
 # ==============================================================================
 # Functions to complete by the students : configuration/setup before game starts
@@ -160,7 +160,7 @@ def change_colors() -> tuple[tuple[int, int, int], tuple[int, int, int]]:
         #   Ús de la funció read_color per a la sol·licitud del color a l'usuari, aquesta retorna una tupla amb els colors RGB (R, G, B)
         background_color = read_color("fons") # Color del fons de pantalla
         foreground_color = read_color("elements del joc") # Color de les pales, la pilota i el text imprès a pantalla
-        return background_color, foreground_color  # Es retornen els dos colors en ordre: fons i primer pla
+        return background_color, foreground_color  # Es retornen els dos colors en ordre: fons i primer pla 
 
     else:
         # Si l'usuari respon que no, es retornen els colors per defecte
@@ -615,10 +615,20 @@ def compute_ai_direction(ball_y: int, paddle_y: int, paddle_h: int) -> int:
     when the ball is aligned enough.
     """
     # TODO: put your code!!!!
+    # 1. Configuració de la tolerància
+    # Si la pilota es troba a <10 de distància del centre de la pala, aquesta es queda quieta per tal d'evitar que tremoli. 
+    tolerance = 10
 
-    # This line of code has been left for letting the full program work
-    # You will need to eliminate it when adding your code
-    return 0
+    #  2. Càlcul del centre vertical de la pala
+    paddle_center = (paddle_y + paddle_h + paddle_y) /2    # El centre de la pala es calcula a partir de la suma dels valors de la vora de dalt (paddle_y) i de la amplada de la pala (paddle_y + paddle_h), d'aquesta manera obtenim les dues vores (superior i inferior), que al sumar-les i dividint-les entre 2 obtenim el punt central de la pala en l'espai.
+
+    # 3. Comparem la posició de la pilota amb el centre de la pala
+    if ball_y < paddle_center - tolerance:  # Es resta la tolerància per tal d'evitar que la pala tremoli, la condició només s'aplica si la pilota està més lluny del centre de la pala + la seva tolerància. La pilota és per sobre la pala
+        return -1   # La pala es mou cap amunt
+    elif ball_y > paddle_center + tolerance:  # Es suma la tolerància per tal d'evitar que la pala tremoli, la condició només s'aplica si la pilota està més lluny del centre de la pala + la seva tolerància. La pilota es troba per sota de la pala
+        return 1    # La pala es mourà cap avall
+    else:   # En el cas de que la pilota estigui al centre de la pala o dins del rang paddle_center - tolerance, la pala no es mourà
+        return 0    # La pala no es mou
 
 # =============================================
 # Checking KEYS UP/DOWN (given to the students)
