@@ -107,11 +107,17 @@ def get_config() -> tuple[int, int, int, int, int]:
     """
 
     # TODO: put your code!!!!
+    #   Amb la funció ask_yes_no preguntem a l'usuari si vol canviar algun paràmetre de la configuració del joc
+    if ask_yes_no("Vols canviar algun aspecte de la configuració del joc?") == True:
+        #   Si es respon que sí es procedeix a la sol·licitud dels valors personalitzats a l'usuari
+        paddle_height = read_int_in_range_w_default("Alçada de la pala (en píxels)", 60, 160, PADDLE_H)    # Sol·licitud de l'alçada de la pala
+        paddle_speed = read_int_in_range_w_default("Velocitat de la pala", 3, 15, SPEED_PADDLE)  # Sol·licitud de la velocitat de la pala
+        speed_ball_x = read_int_in_range_w_default("Velocitat horitzontal de la pilota", 3, 12, SPEED_BALL_X) # Sol·licitud de la velocitat en horitzontal de la pilota
+        speed_ball_y = read_int_in_range_w_default("Velocitat vertical de la pilota", 2, 10, SPEED_BALL_Y)    # Sol·licitud de la velocitat en vertical de la pilota
+        ball_radius = read_int_in_range_w_default("Radi de la pilota", 5, 20, BALL_RADIUS)    # Sol·licitud del radi de la pilota
+        # Recordatori: els 4 arguments de la funció read_int_in_range_w_default(prompt, min, max, valor per defecte)
 
-    # This line of code has been left for letting the full program work
-    # It corresponds to the user answering NO to changing any default values 
-    # You will need to eliminate it when adding your code
-    return PADDLE_H, SPEED_PADDLE, SPEED_BALL_X, SPEED_BALL_Y, BALL_RADIUS 
+    return paddle_height, paddle_speed, speed_ball_x, speed_ball_y, ball_radius
 
 def change_colors() -> tuple[tuple[int, int, int], tuple[int, int, int]]:
     """ Ask the user if they want to modify the game colors (background and foreground).
@@ -194,7 +200,7 @@ def read_color(prompt: str) -> tuple[int, int, int]:
     g = read_int_in_range(f"Color {prompt}: color verd (G)", 0, 255)   # Sol·licitud del color verd
     b = read_int_in_range(f"Color {prompt}: color blau (B)", 0, 255)   # Sol·licitud del color blau
 
-    #   Es retornen els 3 components RGB que formen el color desitjat per l'usuari
+    #   Es retornen els 3 components RGB que formen el color desitjat per l'usuari en forma de tupla
     return r, g, b
 
 def read_int_in_range(prompt: str, low: int, high: int) -> int:
