@@ -493,9 +493,28 @@ def reset_ball(center_x: int, center_y: int, vx0: int, vy0: int, to_right: bool)
 
     # TODO: put your code!!!!
 
-    # This line of code has been left for letting the full program work
-    # You will need to eliminate/modify it when adding your code
-    return center_x, center_y, vx0, vy0
+    # 1. Assignem les coordenades centrals de la pilota
+    x = center_x
+    y = center_y
+
+    # 2. Assignem la velocitat horitzontal segons la direcció en funció del paràmetre bool "to right".
+    if to_right == True: 
+        vx = vx0  # Si to_right és True, la velocitat horitzontal és positiva (cap a la dreta)
+    else:
+        vx = -vx0  # Si to_right és False, la velocitat horitzontal és negativa (cap a l'esquerra)
+
+    # 3. Assignem la velocitat vertical amb una variació aleatòria (apartat opcional).
+    variation = 1   # La màxima variació que es pot afegir o restar serà de +-1 respecte vy0
+    vy = random.randint(vy0 - variation, vy0 + variation)    # La velocitat vertical serà un valor aleatori qualsevol entre vy0-1 i vy0+1
+
+    if vy < 1: 
+        vy = 1  # Si la velocitat vertical és negativa o 0, la fem positiva per assegurar que la pilota no es mourà en línia recta. 
+
+    if random.randint(0, 1) == 0:  # El sentit es decideix amb un 50% de probabilitat de ser cap amunt o cap avall.
+        vy = -vy  # Si el valor aleatori és 0, invertim el signe de la velocitat vertical per fer que la pilota es mogui cap amunt.
+
+    # Es retorna la posició inicial de la pilota (x, y) i les velocitats (vx, vy) després de reiniciar-la al centre de la pantalla.
+    return x, y, vx, vy
 
 
 
